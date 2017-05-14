@@ -1,7 +1,7 @@
 fn main() {
     let infinite_fizz_buzz = (1..).map(fizz_buzz_string).map(|x| println!("{:?}", x));
 
-    infinite_fizz_buzz.take(10000000).fold((), |_, _| ());
+    infinite_fizz_buzz.take(10000000).fold((), |x, _| x);
 }
 
 fn fizz_buzz_string(x: usize) -> String {
