@@ -1,14 +1,7 @@
 fn main() {
-    let infinite_fizz_buzz = (1..).map(fizz_buzz_string);
-    let strings: Vec<String> = infinite_fizz_buzz.take(100).collect();
+    let infinite_fizz_buzz = (1..).map(fizz_buzz_string).map(|x| println!("{:?}", x));
 
-    for x in strings {
-        printstr(x)
-    }
-}
-
-fn printstr(x: String) -> () {
-    println!("{:?}", x)
+    infinite_fizz_buzz.take(10000000).fold((), |_, _| ());
 }
 
 fn fizz_buzz_string(x: usize) -> String {
