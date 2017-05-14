@@ -15,3 +15,44 @@ fn fizz_buzz_string(x: usize) -> String {
         x.to_string()
     }
 }
+
+#[cfg(test)]
+#[macro_use]
+extern crate quickcheck;
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use quickcheck::TestResult;
+
+    quickcheck! {
+        fn modulo_5_contains_buzz(x: usize) -> TestResult {
+            if x % 5 != 0 {
+                return TestResult::discard()
+            }
+            TestResult::from_bool(fizz_buzz_string(x).contains("Buzz"))
+        }
+    }
+
+    quickcheck! {
+        fn modulo_3_contains_fizz(x: usize) -> TestResult {
+            if x % 3 != 0 {
+                return TestResult::discard()
+            }
+            TestResult::from_bool(fizz_buzz_string(x).contains("Fizz"))
+        }
+    }
+
+    quickcheck!{
+        fn non_divisible_never_contains_fizz_or_buzz(x: usize) -> TestResult{
+            if x % 3 == 0 || x % 5 == 0 {
+                return TestResult::discard()
+            }
+            TestResult::from_bool(
+                !fizz_buzz_string(x).contains("Fizz") && !fizz_buzz_string(x).contains("Buzz")
+            )
+        }
+    }
+
+}
